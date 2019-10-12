@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * 普通用户
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "blog_user")
-public class User {
+public class User implements Serializable {
     @Id
     @Column(name = "id")
     private String id;//主键

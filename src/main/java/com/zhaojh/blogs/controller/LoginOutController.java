@@ -86,7 +86,7 @@ public class LoginOutController {
         boolean matches = bCryptPasswordEncoder.matches(password, user.getPassword());//参数一：用户输入的密码；参数二查询的密码进行比对。
         if(matches){
             log.info("用户登录成功！");
-            request.getSession().setAttribute("userName",user.getAccount());
+            request.getSession().setAttribute("account",user.getAccount());
             return "index.html";
         }
         log.info("用户登录失败！");

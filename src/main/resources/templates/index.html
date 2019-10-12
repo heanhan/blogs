@@ -10,8 +10,8 @@
     <!-- Bootstrap -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/index.css">
-    <link rel="stylesheet" href="../static/css/bootstrap-markdown.min.css"
-          type="text/css">
+    <link rel="stylesheet" type="text/css" href="../static/css/reveal.css">
+    <link rel="stylesheet" href="../static/css/bootstrap-markdown.min.css" type="text/css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -107,7 +107,7 @@
     </div>
     <hr class="hr_2">
     <div class="row">
-        <!-- 文章列表 -->
+        <!-- 列表 -->
         <div class="col-xs-9">
             <div class="list-group div_article">
                 <!-- 子头栏 -->
@@ -116,14 +116,14 @@
                     <h4 class="list-group-item-heading" align="center">
                         我与昨晚去世，走时心如止水，我于今早重生，来时心怀暖阳！</h4>
                 </a>
-                <!-- 文章列表 -->
+                <!-- 列表 -->
                 <div class="list-group-item item_article">
                     <div class="row">
                         <div class="div_center col-xs-9">
                             <div class="list-group-item-heading div_article_title">
-                                <strong> 个人生活随记-2019-10-08 </strong>
+                                <strong id="article_title"> 个人生活随记-2019-10-08 </strong>
                             </div>
-                            <p class="list-group-item-text div_article_content">
+                            <p class="list-group-item-text div_article_content" id="article_content">
                                 用文字记录生活感知，让平凡生活不在平凡。面对过往，感谢自己以前遇见的所有人和事，感谢那些在我困苦时给予我支持的人，感谢那些今生只有一面之缘的人儿。感谢你们曾路过我的世界，我想趁着余热将你们烙印在我生命深处。
                             </p>
                             <p>
@@ -135,7 +135,7 @@
                         <div class="col-xs-3 div_right_info">
                             <img class="iv_article img-rounded"
                                  src="../static/images/ic_p5.jpg">
-                            <div>2019/10/08 22:09</div>
+                            <div id="article_time">2019/10/08 22:09</div>
                         </div>
                     </div>
                 </div>
@@ -362,14 +362,14 @@
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../static/js/jquery-3.3.1.min.js"></script>
+<script src="../static/js/reveal.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../static/js/init.js" type="text/script"></script>
 <script src="../static/js/util.js"></script>
 <script type="text/javascript" src="../static/js/bootstrap-markdown.js"></script>
-<script type="text/javascript"
-        src="../static/locale/bootstrap-markdown.zh.js"></script>
+<script type="text/javascript" src="../static/locale/bootstrap-markdown.zh.js"></script>
 <div>
     <div class="main_nav_bottom">
         <nav class="navbar navbar-default navbar-fixed-bottom">
@@ -447,13 +447,18 @@
         });
         btn.button('reset');
     });
+
+
+    /*个人随记的部分   开始   */
+
     //ajax 随记
     $("#save-diary").on('click', function()
     {
-        alert("OK!");
-        var diaryTitle=$("#diary-title").val();
+
+        var diaryTitle=$("#diary-title").val();//获取标题
         // var diaryClassify=$("#diary-classify").val();
-        var diaryContent=$("#diary-content").val();
+        var diaryContent=$("#diary-content").val();//获取随记内容
+
         //判断标不能为空！
         if(diaryTitle==null||diaryTitle==''||diaryTitle == undefined){
             $("#diary-title").css('borderColor','red');
@@ -464,7 +469,7 @@
             $("#diary-title").css('borderColor','')
         }
         //判断内容不能为空！
-        if(diaryContent == null || diaryContent == '' ||diaryContent == undefined){
+        if(diaryContent == null || diaryContent == '' ||diaryContent==undefined){
             $("#diary-content").css('boredColor','red');
             $("#diary-content").attr('placeholder','提示：内容不能为空哦！');
             return;
@@ -476,20 +481,24 @@
 
         $.ajax({
             type:"POST",
-            url:"blog/addDiary",
+            url:"/personaleNotes/addPersonalNotes",
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
             datatype:"json",
             data:{
                 "title":diaryTitle,
-                "cassify":"生活随记",
+                "category":"生活随记",
                 "content":diaryContent,
             },
             success:function(result){
-                if(result=="success")
-                {
-                    console.log(result)
-                    alert("OK!");
-                }else
-                {
+                if(result=="success"){
+                    $("#diary-title").reset();
+                    $("#diary-classify").reset();
+                    $("#diary-content").reset();
+                }
+                if(result == "inputAccount"){
+                    alert("抱歉，需要用户进行登录！");
+                }
+                else{
                     alert("failed");
                 }
                 $("#diary-title").reset();
@@ -499,6 +508,8 @@
         });
     });
 </script>
+
+/*个人随记的部分   结束   */
 
 <!-- 生活随记 页签-->
 <script type="text/javascript">
