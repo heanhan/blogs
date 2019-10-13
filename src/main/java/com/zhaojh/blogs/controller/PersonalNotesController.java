@@ -72,7 +72,7 @@ public class PersonalNotesController {
     }
 
     /**
-     *
+     * 分页查询 个人随记
      * @return
      */
     @GetMapping(value = "/findAllPersonalNotesByPage")
@@ -84,5 +84,18 @@ public class PersonalNotesController {
 
         return allPersonalNotesByPage;
 
+    }
+
+    /**
+     * 根据随记的id 查询单条随记
+     * @param id  id
+     * @return PersonnalNotese
+     */
+    @GetMapping(value = "/findPersonalNotesById")
+    @ResponseBody
+    public PersonalNotes findPersonalNotesById(String id){
+        log.info("获取的随记的id为："+id);
+        PersonalNotes personalNotes =  personalNotesService.findPersonalNotesById(id);
+        return personalNotes;
     }
 }
