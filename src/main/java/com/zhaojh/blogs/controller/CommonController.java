@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,6 +29,11 @@ public class CommonController {
      */
     @GetMapping(value = "/countAllCategoryNumbers")
     public Map<String,String> countAllCategoryNumbers(){
+        Map<String,String> result =new HashMap<>();
+        String personalNotesNumber = personalNotesService.countPersonalNotes()+"";//统计个人随记的数量
+        //统计技术贴的数量
+        //统计生活的数量
+        result.put("personalNotesNumber",personalNotesNumber);
 
         return null;
 
