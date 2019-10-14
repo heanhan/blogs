@@ -28,4 +28,10 @@ public interface IPersonalNotesService {
      * @return PersonalNotes
      */
     PersonalNotes findPersonalNotesById(String id);
+
+    /**
+     * 统计个人随记的数量。
+     * @return long
+     */
+    long countPersonalNotes();
 }

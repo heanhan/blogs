@@ -76,4 +76,15 @@ public class PersonalNotesServiceImpl implements IPersonalNotesService {
         PersonalNotes personalNotes = optionPersonalNotes.get();
         return personalNotes;
     }
+
+
+    /**
+     * 统计个人随记的数量。
+     * @return long
+     */
+    @Override
+    public long countPersonalNotes(){
+        long count = personalNotesDao.count();
+        return count;
+    }
 }
